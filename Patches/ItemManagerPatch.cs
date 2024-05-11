@@ -89,7 +89,7 @@ namespace CursedScraps.Patches
                 {
                     __instance.scrapValue = (int)Math.Round((__instance.itemProperties.minValue + __instance.itemProperties.maxValue) / 2 * RoundManager.Instance.scrapValueMultiplier * curseEffect.Multiplier);
                     componentInChildren.scrapValue = __instance.scrapValue;
-                    componentInChildren.subText = $"Value: ${componentInChildren.scrapValue}" + " \nCurse: " + curseEffect.Name;
+                    componentInChildren.subText = $"价值: ${componentInChildren.scrapValue}" + " \n诅咒: " + curseEffect.Name;
                 }
                 return false;
             }
@@ -122,7 +122,7 @@ namespace CursedScraps.Patches
                         {
                             scrap.itemProperties.itemName = Constants.CURSE_PILLS;
                             componentInChildren.headerText = Constants.CURSE_PILLS;
-                            componentInChildren.subText = "Pills to cure all active curses on the player.";
+                            componentInChildren.subText = "药丸使用后,对下一个捡起的废料诅咒免疫.";
                         }
                     }
                 }
@@ -140,7 +140,7 @@ namespace CursedScraps.Patches
         {
             if (__instance.itemProperties.name.Equals(Constants.CURSE_PILLS))
             {
-                HUDManager.Instance.ChangeControlTip(1, "Consume pills: [LMB]");
+                HUDManager.Instance.ChangeControlTip(1, "服用药丸:[LMB]");
             }
         }
 
@@ -212,7 +212,7 @@ namespace CursedScraps.Patches
                     }
                     else
                     {
-                        Debug.LogError("Scrap networkobject object did not contain grabbable object!: " + networkObject.gameObject.name);
+                        Debug.LogWarning("Scrap networkobject object did not contain grabbable object!: " + networkObject.gameObject.name);
                     }
                 }
                 else
@@ -388,7 +388,7 @@ namespace CursedScraps.Patches
             ScanNodeProperties componentInChildren = ((Component)(object)scrap).gameObject.GetComponentInChildren<ScanNodeProperties>();
             if (componentInChildren != null)
             {
-                componentInChildren.subText = $"Value: ${componentInChildren.scrapValue}" + " \nCurse: " + nameCore;
+                componentInChildren.subText = $"价值: ${componentInChildren.scrapValue}" + " \n诅咒: " + nameCore;
             }
         }
 
@@ -405,7 +405,7 @@ namespace CursedScraps.Patches
                 {
                     scrapClone = GetCloneScrapFromValue(grabbedScrap);
 
-                    if (scrapClone == null) HUDManager.Instance.DisplayTip(Constants.ERROR_OCCURRED, "The scrap couldn't be cloned.");
+                    if (scrapClone == null) HUDManager.Instance.DisplayTip(Constants.ERROR_OCCURRED, "废料不能被克隆.");
                     break;
                 }
             }
@@ -417,7 +417,7 @@ namespace CursedScraps.Patches
                 {
                     scrapClone.scrapValue = grabbedScrap.scrapValue;
                     componentInChildren.scrapValue = grabbedScrap.scrapValue;
-                    componentInChildren.subText = $"Value: ${componentInChildren.scrapValue}" + " \nCurse: " + curseEffect;
+                    componentInChildren.subText = $"价值: ${componentInChildren.scrapValue}" + " \n诅咒: " + curseEffect;
                     if (curseEffect.Equals(Constants.COMM_REFLECTION) && player == GameNetworkManager.Instance.localPlayerController)
                     {
                         PlayerManagerPatch.trackedScrap = scrapClone;
@@ -494,7 +494,7 @@ namespace CursedScraps.Patches
                 ScanNodeProperties componentInChildren = ((Component)(object)scrapObject).gameObject.GetComponentInChildren<ScanNodeProperties>();
                 if (componentInChildren != null)
                 {
-                    componentInChildren.subText = $"Value: ${componentInChildren.scrapValue}";
+                    componentInChildren.subText = $"价值: ${componentInChildren.scrapValue}";
                 }
             }
         }

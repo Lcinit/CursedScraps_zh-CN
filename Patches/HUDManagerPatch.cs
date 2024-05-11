@@ -61,7 +61,7 @@ namespace CursedScraps.Patches
                                 }
                                 else if (scanElementText[1].text != null)
                                 {
-                                    string[] splitText = scanElementText[1].text.Split(new string[] { "\nCurse: " }, StringSplitOptions.None);
+                                    string[] splitText = scanElementText[1].text.Split(new string[] { "\n诅咒: " }, StringSplitOptions.None);
                                     if (splitText.Length > 1)
                                     {
                                         if (!ConfigManager.hidingMode.Value.Equals(Constants.HIDING_NEVER)
@@ -119,7 +119,7 @@ namespace CursedScraps.Patches
                 {
                     if (entranceTeleport.entranceId != allowedEntrance)
                     {
-                        HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "A curse prevents you from using this doorway.");
+                        HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, " 诅咒在阻止你使用这扇门.");
                         __result = false;
                     }
                     else

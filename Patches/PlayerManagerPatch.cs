@@ -52,7 +52,7 @@ namespace CursedScraps.Patches
             {
                 if (immunedPlayers.Contains(__instance))
                 {
-                    HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "An immunity for the next picked up cursed scrap is already active.");
+                    HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "已拥有对下一个捡起的诅咒物品的免疫.");
                 }
                 else
                 {
@@ -124,7 +124,7 @@ namespace CursedScraps.Patches
                 {
                     if (IsCoopCursed(curseEffect) || (communicationPlayer != null && !curseEffect.Equals(Constants.COMM_REFLECTION)))
                     {
-                        HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "You already have an active coop curse.");
+                        HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "您已经有一个激活的诅咒.");
                         return false;
                     }
 
@@ -133,12 +133,12 @@ namespace CursedScraps.Patches
                         GrabbableObject scrap;
                         if (communicationPlayer == null)
                         {
-                            HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "You are not the selected player.");
+                            HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "你不是被选中的玩家.");
                             return false;
                         }
                         else if ((scrap = ItemManagerPatch.GetCloneScrapFromCurse(grabbedScrap, Constants.COMM_CORE, false)) != null && !scrap.isHeld)
                         {
-                            HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "The core scrap has to be held for that.");
+                            HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "必须先拾取 诅咒核心.");
                             return false;
                         }
                     }
@@ -268,7 +268,7 @@ namespace CursedScraps.Patches
                 ((activeCurses.Contains(Constants.MUTE) && (optionType == SettingsOptionType.MicEnabled || optionType == SettingsOptionType.MicDevice || optionType == SettingsOptionType.MicPushToTalk))
                  || (activeCurses.Contains(Constants.DEAFNESS) && (optionType == SettingsOptionType.MasterVolume || optionType == SettingsOptionType.MicDevice))))
             {
-                HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "A curse prevents you from performing this action.");
+                HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "诅咒,禁止你执行此操作.");
                 return false;
             }
             return true;
@@ -280,7 +280,7 @@ namespace CursedScraps.Patches
         {
             if (ConfigManager.globalPrevent.Value && activeCurses.Contains(Constants.CONFUSION) && rebindableAction.action.name.Equals("Move"))
             {
-                HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "A curse prevents you from performing this action.");
+                HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "诅咒,禁止你执行此操作.");
                 return false;
             }
             return true;
@@ -338,13 +338,9 @@ namespace CursedScraps.Patches
         private static void PostDropObject(ref PlayerControllerB __instance)
         {
             string curseEffectHeld = GetCurseEffect(ref __instance.currentlyHeldObjectServer);
-            if (!string.IsNullOrEmpty(curseEffectHeld))
+            if (string.IsNullOrEmpty(curseEffectHeld) && activeCurses.Contains(Constants.ERRANT))
             {
-                if (!curseEffectHeld.Equals(Constants.CAPTIVE)
-                    && activeCurses.Contains(Constants.ERRANT))
-                {
                     TeleportPlayer(ref __instance);
-                }
             }
         }
 
@@ -370,7 +366,7 @@ namespace CursedScraps.Patches
                     ApplyDiminutive(false, ref __instance);
                 }
             }
-            
+
             if (activeCurses.Count > 0 && activeCurses.Contains(Constants.DIMINUTIVE) && __instance != GameNetworkManager.Instance.localPlayerController)
             {
                 if (__instance.transform.localScale != DIMINUTIVE_SCALE && Vector3.Distance(__instance.transform.position, GameNetworkManager.Instance.localPlayerController.transform.position) <= 1f)
@@ -537,7 +533,7 @@ namespace CursedScraps.Patches
                 ScanNodeProperties componentInChildren = ((Component)(object)grabbableObject).gameObject.GetComponentInChildren<ScanNodeProperties>();
                 if (componentInChildren != null && componentInChildren.subText != null && componentInChildren.subText.Length > 1)
                 {
-                    string[] splitText = componentInChildren.subText.Split(new string[] { "\nCurse: " }, StringSplitOptions.None);
+                    string[] splitText = componentInChildren.subText.Split(new string[] { "\n诅咒: " }, StringSplitOptions.None);
                     if (splitText.Length > 1)
                     {
                         return splitText[1];
@@ -769,6 +765,10 @@ namespace CursedScraps.Patches
                 if (savedMasterVolume != 0f)
                 {
                     IngamePlayerSettings.Instance.ChangeMasterVolume((int)(savedMasterVolume * 100));
+                    if (IngamePlayerSettings.Instance.settings.masterVolume == 0)
+                    {
+                        IngamePlayerSettings.Instance.settings.masterVolume = savedMasterVolume;
+                    }
                 }
             }
         }
@@ -837,7 +837,7 @@ namespace CursedScraps.Patches
                 {
                     // Activer la malédiction dans la deuxième partie pour ce joueur => pour qu'il soit capable de récupérer la deuxième partie de l'objet
                     communicationPlayer = player;
-                    HUDManager.Instance.DisplayTip(Constants.IMPORTANT_INFORMATION, "A player has picked the first part of a cursed object, and you've been chosen to find the second part. Find it to set him free!");
+                    HUDManager.Instance.DisplayTip(Constants.IMPORTANT_INFORMATION, "一名玩家已经找到了诅咒物品的第一部分,您被选中去寻找第二部分,找到它以解救您的伙伴!");
                 }
                 else if (GameNetworkManager.Instance.localPlayerController == player)
                 {
@@ -855,7 +855,7 @@ namespace CursedScraps.Patches
             {
                 if (GameNetworkManager.Instance.localPlayerController == player)
                 {
-                    HUDManager.Instance.DisplayTip(Constants.IMPORTANT_INFORMATION, "No player could be found to share this curse with you.");
+                    HUDManager.Instance.DisplayTip(Constants.IMPORTANT_INFORMATION, "无法找到与您分享此诅咒的玩家.");
                     // Immobiliser le joueur
                     EnablePlayerActions(Constants.COMMUNICATION, false);
                 }
@@ -1062,7 +1062,11 @@ namespace CursedScraps.Patches
             foreach (string actionName in actionNames)
             {
                 if (enable && actionsBlockedBy.Count == 0) IngamePlayerSettings.Instance.playerInput.actions.FindAction(actionName, false).Enable();
-                else IngamePlayerSettings.Instance.playerInput.actions.FindAction(actionName, false).Disable();
+                else
+                {
+                    IngamePlayerSettings.Instance.playerInput.actions.FindAction(actionName, false).Disable();
+                    HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "诅咒,禁止你执行此操作.");
+                }
             }
         }
 
@@ -1085,5 +1089,49 @@ namespace CursedScraps.Patches
                 activeCurses.Remove(curseEffect);
             }
         }
+
+        public static void UDToggleMute(Harmony harmony)
+        {
+            if (Harmony.HasAnyPatches("quackandcheese.togglemute"))
+            {
+                var originalMethod = AccessTools.Method(Type.GetType("ToggleMute.ToggleMuteManager, ToggleMute"), "OnToggleMuteKeyPressed");
+                if (originalMethod != null)
+                {
+                    if (ConfigManager.globalPrevent.Value)
+                    {
+                        var emptyPatch = new HarmonyMethod(typeof(PlayerManagerPatch), nameof(PlayerManagerPatch.UDToggleMutePrefix));
+                        harmony.Patch(originalMethod, prefix: emptyPatch);
+                    }
+                }
+            }
+        }
+        // 定义一个空的补丁类
+        public static bool UDToggleMutePrefix()
+        {
+            if (activeCurses.Contains(Constants.MUTE))
+            {
+                HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "诅咒,禁止开启麦克风");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
+        [HarmonyPatch(typeof(IngamePlayerSettings), nameof(IngamePlayerSettings.SaveChangedSettings))]
+        [HarmonyPrefix]
+        private static bool PreventSaveSettings()
+        {
+            if (ConfigManager.globalPrevent.Value &&
+                ((activeCurses.Contains(Constants.MUTE)) || (activeCurses.Contains(Constants.DEAFNESS) && savedMasterVolume != 0f)))
+            {
+                HUDManager.Instance.DisplayTip(Constants.IMPOSSIBLE_ACTION, "诅咒,禁止调整游戏设置.");
+                return false;
+            }
+            return true;
+        }
+
     }
 }

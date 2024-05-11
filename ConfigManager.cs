@@ -76,72 +76,72 @@ namespace CursedScraps
         internal static void Load()
         {
             // GLOBAL
-            globalChance = CursedScraps.configFile.Bind<string>("_Global_", "Chance", "default:30", "Overall chance of scrap appearing.\nThis value does not replace the chance of appearance for each curse; the latter are considered after the overall chance to determine which curse is chosen.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
-            globalPrevent = CursedScraps.configFile.Bind<bool>("_Global_", "Preventing Settings Changes", true, "Set to false to allow players to change their settings when a curse modifying controls is active.\nThis configuration is mainly there in case of unforeseen bugs or potential incompatibility.");
+            globalChance = CursedScraps.configFile.Bind<string>("_Global_", "Chance", "default:30", "废料出现的总机会.\n这个值不能代替每个诅咒出现的机会;后者是在决定选择哪个诅咒的总体机会之后考虑的.");
+            globalPrevent = CursedScraps.configFile.Bind<bool>("_Global_", "Preventing Settings Changes", true, "设置为false允许玩家在激活诅咒修改控制时可以更改设置.");
             // HIDE MECHANIC
-            hidingMode = CursedScraps.configFile.Bind<string>("_Hiding mechanic_", "Mode", Constants.HIDING_COUNTER, "Mode for the hiding mechanic.\n" + Constants.HIDING_ALWAYS + " - Always hide curses.\n" + Constants.HIDING_NEVER + " - Never hide curses.\n" + Constants.HIDING_COUNTER + " - Use a counter to hide curses once a certain number of non-cursed items have been picked up.");
-            hidingCounter = CursedScraps.configFile.Bind<int>("_Hiding mechanic_", "Counter", 10, "Number of non-cursed items that must be picked up before curses are concealed.\nThe counter is reset each time a cursed item is picked up.");
+            hidingMode = CursedScraps.configFile.Bind<string>("_Hiding mechanic_", "Mode", Constants.HIDING_COUNTER, "诅咒提示文本隐藏模式.\n" + Constants.HIDING_ALWAYS + " - 隐藏物品的诅咒提示.\n" + Constants.HIDING_NEVER + " - 显示物品的诅咒提示.\n" + Constants.HIDING_COUNTER + " - 捡到一定数量的非诅咒物品，就使用计数器隐藏诅咒.");
+            hidingCounter = CursedScraps.configFile.Bind<int>("_Hiding mechanic_", "Counter", 10, " 在隐藏诅咒之前必须捡起的非诅咒物品的数量.\n每次捡到被诅咒的物品时，计数器都会重置.");
             // ANTI-CURSE PILLS
-            isPills = CursedScraps.configFile.Bind<bool>(Constants.CURSE_PILLS, "Enable", true, "Is " + Constants.CURSE_PILLS + " item enabled?\nConsumable that removes all active curses on the player.");
-            pillsChance = CursedScraps.configFile.Bind<float>(Constants.CURSE_PILLS, "Chance", 15, "Overall chance of pill appearing.\nThis value does not replace the chance of appearance for each curse; the latter are considered after the overall chance to determine which curse is chosen.");
+            isPills = CursedScraps.configFile.Bind<bool>(Constants.CURSE_PILLS, "Enable", true, Constants.CURSE_PILLS + " 是否启用?\n消耗品，可以移除玩家身上所有激活的诅咒。");
+            pillsChance = CursedScraps.configFile.Bind<float>(Constants.CURSE_PILLS, "Chance", 15, "反诅咒药出现的总概率.\n这个值并不替代每个诅咒出现的概率,后者是在总概率确定之后再考虑的，用于决定选择哪个诅咒.");
             // INHIBITION
-            isInhibition = CursedScraps.configFile.Bind<bool>(Constants.INHIBITION, "Enable", true, "Is " + Constants.INHIBITION + " curse enabled?\nPrevents the player from jumping and crouching.");
-            inhibitionMultiplier = CursedScraps.configFile.Bind<float>(Constants.INHIBITION, "Multiplier", 2.7f, "Value multiplier for scraps with the " + Constants.INHIBITION + " curse.");
-            inhibitionWeight = CursedScraps.configFile.Bind<string>(Constants.INHIBITION, "Weight", "default:1,Experimentation:0", "Spawn weight of a scrap with the " + Constants.INHIBITION + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
+            isInhibition = CursedScraps.configFile.Bind<bool>(Constants.INHIBITION, "Enable", true, Constants.INHIBITION + " 诅咒是否启用?\n诅咒禁止玩家跳跃和下蹲.");
+            inhibitionMultiplier = CursedScraps.configFile.Bind<float>(Constants.INHIBITION, "Multiplier", 2.7f, "带有 " + Constants.INHIBITION + " 诅咒的废料的价值乘数.");
+            inhibitionWeight = CursedScraps.configFile.Bind<string>(Constants.INHIBITION, "Weight", "default:1,Experimentation:0", "带有 " + Constants.INHIBITION + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
             // CONFUSION
-            isConfusion = CursedScraps.configFile.Bind<bool>(Constants.CONFUSION, "Enable", true, "Is " + Constants.CONFUSION + " curse enabled?\nReverses movement controls and jump/crouch keys for the player.");
-            confusionMultiplier = CursedScraps.configFile.Bind<float>(Constants.CONFUSION, "Multiplier", 2.6f, "Value multiplier for scraps with the " + Constants.CONFUSION + " curse.");
-            confusionWeight = CursedScraps.configFile.Bind<string>(Constants.CONFUSION, "Weight", "default:1", "Spawn weight of a scrap with the " + Constants.CONFUSION + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
+            isConfusion = CursedScraps.configFile.Bind<bool>(Constants.CONFUSION, "Enable", true, Constants.CONFUSION + " 诅咒是否启用?\n诅咒反转玩家的移动控制和跳跃/蹲伏按键的功能。.");
+            confusionMultiplier = CursedScraps.configFile.Bind<float>(Constants.CONFUSION, "Multiplier", 2.6f, "带有 " + Constants.CONFUSION + " 诅咒的废料的价值乘数.");
+            confusionWeight = CursedScraps.configFile.Bind<string>(Constants.CONFUSION, "Weight", "default:1", "带有 " + Constants.CONFUSION + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
             // CAPTIVE
-            isCaptive = CursedScraps.configFile.Bind<bool>(Constants.CAPTIVE, "Enable", true, "Is " + Constants.CAPTIVE + " curse enabled?\nPrevents the item from being thrown until it has been brought back to the ship.");
-            captiveMultiplier = CursedScraps.configFile.Bind<float>(Constants.CAPTIVE, "Multiplier", 1.8f, "Value multiplier for scraps with the " + Constants.CAPTIVE + " curse.");
-            captiveWeight = CursedScraps.configFile.Bind<string>(Constants.CAPTIVE, "Weight", "default:1", "Spawn weight of a scrap with the " + Constants.CAPTIVE + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
+            isCaptive = CursedScraps.configFile.Bind<bool>(Constants.CAPTIVE, "Enable", true, Constants.CAPTIVE + " 诅咒是否启用?\n诅咒废料在被玩家带回船只之前，是无法被丢弃或投掷的.");
+            captiveMultiplier = CursedScraps.configFile.Bind<float>(Constants.CAPTIVE, "Multiplier", 1.8f, "带有 " + Constants.CAPTIVE + " 诅咒的废料的价值乘数.");
+            captiveWeight = CursedScraps.configFile.Bind<string>(Constants.CAPTIVE, "Weight", "default:1", "带有 " + Constants.CAPTIVE + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
             // BLURRY
-            isBlurry = CursedScraps.configFile.Bind<bool>(Constants.BLURRY, "Enable", true, "Is " + Constants.BLURRY + " curse enabled?\nReduces visual clarity on the player's camera.");
-            blurryMultiplier = CursedScraps.configFile.Bind<float>(Constants.BLURRY, "Multiplier", 2.4f, "Value multiplier for scraps with the " + Constants.BLURRY + " curse.");
-            blurryWeight = CursedScraps.configFile.Bind<string>(Constants.BLURRY, "Weight", "default:1", "Spawn weight of a scrap with the " + Constants.BLURRY + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
+            isBlurry = CursedScraps.configFile.Bind<bool>(Constants.BLURRY, "Enable", true, Constants.BLURRY + " 诅咒是否启用?\n让玩家屏幕视野模糊");
+            blurryMultiplier = CursedScraps.configFile.Bind<float>(Constants.BLURRY, "Multiplier", 2.4f, "带有 " + Constants.BLURRY + " 诅咒的废料的价值乘数.");
+            blurryWeight = CursedScraps.configFile.Bind<string>(Constants.BLURRY, "Weight", "default:1", "带有 " + Constants.BLURRY + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
             blurryIntensity = CursedScraps.configFile.Bind<float>(Constants.BLURRY, "Intensity", 1f, "Intensity of the " + Constants.BLURRY + " curse.");
             // MUTE
-            isMute = CursedScraps.configFile.Bind<bool>(Constants.MUTE, "Enable", true, "Is " + Constants.MUTE + " curse enabled?\nMutes the player's microphone.");
-            muteMultiplier = CursedScraps.configFile.Bind<float>(Constants.MUTE, "Multiplier", 1.5f, "Value multiplier for scraps with the " + Constants.MUTE + " curse.");
-            muteWeight = CursedScraps.configFile.Bind<string>(Constants.MUTE, "Weight", "default:1", "Spawn weight of a scrap with the " + Constants.MUTE + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
+            isMute = CursedScraps.configFile.Bind<bool>(Constants.MUTE, "Enable", true, Constants.MUTE + " 诅咒是否启用?\n将玩家的麦克风静音.");
+            muteMultiplier = CursedScraps.configFile.Bind<float>(Constants.MUTE, "Multiplier", 1.5f, "带有 " + Constants.MUTE + " 诅咒的废料的价值乘数.");
+            muteWeight = CursedScraps.configFile.Bind<string>(Constants.MUTE, "Weight", "default:1", "带有 " + Constants.MUTE + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
             // DEAFNESS
-            isDeafness = CursedScraps.configFile.Bind<bool>(Constants.DEAFNESS, "Enable", true, "Is " + Constants.DEAFNESS + " curse enabled?\nRemoves the player's sound.");
-            deafnessMultiplier = CursedScraps.configFile.Bind<float>(Constants.DEAFNESS, "Multiplier", 2.7f, "Value multiplier for scraps with the " + Constants.DEAFNESS + " curse.");
-            deafnessWeight = CursedScraps.configFile.Bind<string>(Constants.DEAFNESS, "Weight", "default:1", "Spawn weight of a scrap with the " + Constants.DEAFNESS + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
+            isDeafness = CursedScraps.configFile.Bind<bool>(Constants.DEAFNESS, "Enable", true, Constants.DEAFNESS + " 诅咒是否启用?\n让玩家听不见的语音.");
+            deafnessMultiplier = CursedScraps.configFile.Bind<float>(Constants.DEAFNESS, "Multiplier", 2.7f, "带有 " + Constants.DEAFNESS + " 诅咒的废料的价值乘数.");
+            deafnessWeight = CursedScraps.configFile.Bind<string>(Constants.DEAFNESS, "Weight", "default:1", "带有 " + Constants.DEAFNESS + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
             // ERRANT
-            isErrant = CursedScraps.configFile.Bind<bool>(Constants.ERRANT, "Enable", true, "Is " + Constants.ERRANT + " curse enabled?\nTeleports the player randomly when an item is picked up or placed down.");
-            errantMultiplier = CursedScraps.configFile.Bind<float>(Constants.ERRANT, "Multiplier", 2.5f, "Value multiplier for scraps with the " + Constants.ERRANT + " curse.");
-            errantWeight = CursedScraps.configFile.Bind<string>(Constants.ERRANT, "Weight", "default:1", "Spawn weight of a scrap with the " + Constants.ERRANT + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
+            isErrant = CursedScraps.configFile.Bind<bool>(Constants.ERRANT, "Enable", true, Constants.ERRANT + " 诅咒是否启用?\n当玩家捡起或放下物品时，随机传送玩家.");
+            errantMultiplier = CursedScraps.configFile.Bind<float>(Constants.ERRANT, "Multiplier", 2.5f, "带有 " + Constants.ERRANT + " 诅咒的废料的价值乘数.");
+            errantWeight = CursedScraps.configFile.Bind<string>(Constants.ERRANT, "Weight", "default:1", "带有 " + Constants.ERRANT + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
             // PARALYSIS
-            isParalysis = CursedScraps.configFile.Bind<bool>(Constants.PARALYSIS, "Enable", true, "Is " + Constants.PARALYSIS + " curse enabled?\nParalyzes the player when scanning an enemy.");
-            paralysisMultiplier = CursedScraps.configFile.Bind<float>(Constants.PARALYSIS, "Multiplier", 1.8f, "Value multiplier for scraps with the " + Constants.PARALYSIS + " curse.");
-            paralysisWeight = CursedScraps.configFile.Bind<string>(Constants.PARALYSIS, "Weight", "default:1", "Spawn weight of a scrap with the " + Constants.PARALYSIS + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
-            paralysisTime = CursedScraps.configFile.Bind<float>(Constants.PARALYSIS, "Time", 5f, "Player paralysis time in seconds.");
+            isParalysis = CursedScraps.configFile.Bind<bool>(Constants.PARALYSIS, "Enable", true, Constants.PARALYSIS + " 诅咒是否启用?\n扫描敌人时使玩家不能动几秒时间.");
+            paralysisMultiplier = CursedScraps.configFile.Bind<float>(Constants.PARALYSIS, "Multiplier", 1.8f, "带有 " + Constants.PARALYSIS + " 诅咒的废料的价值乘数.");
+            paralysisWeight = CursedScraps.configFile.Bind<string>(Constants.PARALYSIS, "Weight", "default:1", "带有 " + Constants.PARALYSIS + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
+            paralysisTime = CursedScraps.configFile.Bind<float>(Constants.PARALYSIS, "Time", 5f, "玩家不能动的时间,以秒为单位.");
             // SHADOW
-            isShadow = CursedScraps.configFile.Bind<bool>(Constants.SHADOW, "Enable", true, "Is " + Constants.SHADOW + " curse enabled?\nAll enemies are invisible by default (their sound is still active), scanning reveals them.");
-            shadowMultiplier = CursedScraps.configFile.Bind<float>(Constants.SHADOW, "Multiplier", 2.4f, "Value multiplier for scraps with the " + Constants.SHADOW + " curse.");
-            shadowWeight = CursedScraps.configFile.Bind<string>(Constants.SHADOW, "Weight", "default:1", "Spawn weight of a scrap with the " + Constants.SHADOW + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
+            isShadow = CursedScraps.configFile.Bind<bool>(Constants.SHADOW, "Enable", true, Constants.SHADOW + " 诅咒是否启用?\n使所有敌人隐身(他们的声音仍然是活跃的)，扫描时会显示他们.");
+            shadowMultiplier = CursedScraps.configFile.Bind<float>(Constants.SHADOW, "Multiplier", 2.4f, "带有 " + Constants.SHADOW + " 诅咒的废料的价值乘数.");
+            shadowWeight = CursedScraps.configFile.Bind<string>(Constants.SHADOW, "Weight", "default:1", "带有 " + Constants.SHADOW + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
             // SYNCHRONIZATION
-            isSynchronization = CursedScraps.configFile.Bind<bool>(Constants.SYNCHRONIZATION, "Enable", true, "Is " + Constants.SYNCHRONIZATION + " curse enabled?\nThe scrap is split into two parts, when both parts are picked up by two different players, their cameras invert.");
-            synchronizationMultiplier = CursedScraps.configFile.Bind<float>(Constants.SYNCHRONIZATION, "Multiplier", 7f, "Value multiplier for scraps with the " + Constants.SYNCHRONIZATION + " curse.");
-            synchronizationWeight = CursedScraps.configFile.Bind<string>(Constants.SYNCHRONIZATION, "Weight", "default:1", "Spawn weight of a scrap with the " + Constants.SYNCHRONIZATION + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
+            isSynchronization = CursedScraps.configFile.Bind<bool>(Constants.SYNCHRONIZATION, "Enable", true, Constants.SYNCHRONIZATION + " 诅咒是否启用?\n废料被分成两部分，当这两部分被两个不同的玩家捡起时，反转他们的相机.");
+            synchronizationMultiplier = CursedScraps.configFile.Bind<float>(Constants.SYNCHRONIZATION, "Multiplier", 7f, "带有 " + Constants.SYNCHRONIZATION + " 诅咒的废料的价值乘数.");
+            synchronizationWeight = CursedScraps.configFile.Bind<string>(Constants.SYNCHRONIZATION, "Weight", "default:1", "带有 " + Constants.SYNCHRONIZATION + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
             // DIMINUTIVE
-            isDiminutive = CursedScraps.configFile.Bind<bool>(Constants.DIMINUTIVE, "Enable", true, "Is " + Constants.DIMINUTIVE + " curse enabled?\nReduces the player's size.");
-            diminutiveMultiplier = CursedScraps.configFile.Bind<float>(Constants.DIMINUTIVE, "Multiplier", 3f, "Value multiplier for scraps with the " + Constants.DIMINUTIVE + " curse.");
-            diminutiveWeight = CursedScraps.configFile.Bind<string>(Constants.DIMINUTIVE, "Weight", "default:1", "Spawn weight of a scrap with the " + Constants.DIMINUTIVE + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
-            diminutiveSpeed = CursedScraps.configFile.Bind<float>(Constants.DIMINUTIVE, "Speed", 2f, "Speed divider for player movement; the higher the value, the slower the player will move.");
-            diminutiveGrab = CursedScraps.configFile.Bind<float>(Constants.DIMINUTIVE, "Grab", 4f, "Distance grab divider for the player; the higher the value, the less the player will be able to grab from a distance.");
+            isDiminutive = CursedScraps.configFile.Bind<bool>(Constants.DIMINUTIVE, "Enable", true, Constants.DIMINUTIVE + " 诅咒是否启用?\n让玩家变大小.");
+            diminutiveMultiplier = CursedScraps.configFile.Bind<float>(Constants.DIMINUTIVE, "Multiplier", 3f, "带有  " + Constants.DIMINUTIVE + " 诅咒的废料的价值乘数.");
+            diminutiveWeight = CursedScraps.configFile.Bind<string>(Constants.DIMINUTIVE, "Weight", "default:1", "带有  " + Constants.DIMINUTIVE + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
+            diminutiveSpeed = CursedScraps.configFile.Bind<float>(Constants.DIMINUTIVE, "Speed", 2f, "玩家移动的速度分隔器,数值越高，玩家移动得越慢。");
+            diminutiveGrab = CursedScraps.configFile.Bind<float>(Constants.DIMINUTIVE, "Grab", 4f, "对于玩家的距离抓取分隔器,数值越高，玩家能够从远处抓取到的东西就越少。");
             // EXPLORATION
-            isExploration = CursedScraps.configFile.Bind<bool>(Constants.EXPLORATION, "Enable", true, "Is " + Constants.EXPLORATION + " curse enabled?\nPrevents the player from exiting or entering the factory through all doors except one.");
-            explorationMultiplier = CursedScraps.configFile.Bind<float>(Constants.EXPLORATION, "Multiplier", 2.5f, "Value multiplier for scraps with the " + Constants.EXPLORATION + " curse.");
-            explorationWeight = CursedScraps.configFile.Bind<string>(Constants.EXPLORATION, "Weight", "default:1", "Spawn weight of a scrap with the " + Constants.EXPLORATION + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
-            explorationTime = CursedScraps.configFile.Bind<float>(Constants.EXPLORATION, "Time", 120f, "Duration in seconds during which the player can scan the exit door they need to use.");
+            isExploration = CursedScraps.configFile.Bind<bool>(Constants.EXPLORATION, "Enable", true, Constants.EXPLORATION + " 诅咒是否启用?\n玩家只能使用特定的门来进入或离开工厂，其他所有的门都被阻止了。");
+            explorationMultiplier = CursedScraps.configFile.Bind<float>(Constants.EXPLORATION, "Multiplier", 2.5f, "带有  " + Constants.EXPLORATION + " 诅咒的废料的价值乘数.");
+            explorationWeight = CursedScraps.configFile.Bind<string>(Constants.EXPLORATION, "Weight", "default:1", "带有  " + Constants.EXPLORATION + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
+            explorationTime = CursedScraps.configFile.Bind<float>(Constants.EXPLORATION, "Time", 120f, "玩家可以扫描他们需要使用的出口门的持续时间，以秒为单位.");
             // COMMUNICATION
-            isCommunication = CursedScraps.configFile.Bind<bool>(Constants.COMMUNICATION, "Enable", true, "Is " + Constants.COMMUNICATION + " curse enabled?\nThis curse affects two players in two stages. See README for more details.");
-            communicationMultiplier = CursedScraps.configFile.Bind<float>(Constants.COMMUNICATION, "Multiplier", 4f, "Value multiplier for scraps with the " + Constants.COMMUNICATION + " curse.");
-            communicationWeight = CursedScraps.configFile.Bind<string>(Constants.COMMUNICATION, "Weight", "default:1", "Spawn weight of a scrap with the " + Constants.COMMUNICATION + " curse.\nYou can adjust this value according to the moon by adding its name along with its value (moon:value). Each key/value pair should be separated by a comma.");
-            communicationChrono = CursedScraps.configFile.Bind<int>(Constants.COMMUNICATION, "Chrono", 120, "Time limit for both players to return to the ship.");
+            isCommunication = CursedScraps.configFile.Bind<bool>(Constants.COMMUNICATION, "Enable", true, Constants.COMMUNICATION + " 诅咒是否启用?\n这个诅咒在两个阶段影响两个玩家。有关更多细节，请参阅README.");
+            communicationMultiplier = CursedScraps.configFile.Bind<float>(Constants.COMMUNICATION, "Multiplier", 4f, "带有  " + Constants.COMMUNICATION + " 诅咒的废料的价值乘数.");
+            communicationWeight = CursedScraps.configFile.Bind<string>(Constants.COMMUNICATION, "Weight", "default:1", "带有 " + Constants.COMMUNICATION + " 诅咒的废料的生成概率.\n可以根据月亮的名称和相应的值(moon:value)来调整这个概率, 每个键/值对之间用逗号分隔.");
+            communicationChrono = CursedScraps.configFile.Bind<int>(Constants.COMMUNICATION, "Chrono", 120, "两名玩家返回飞船的时间限制.");
         }
 
         internal static List<CurseEffect> GetCurseEffectsFromConfig()

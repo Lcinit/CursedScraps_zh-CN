@@ -7,6 +7,7 @@ using System.Collections.Generic;
 namespace CursedScraps
 {
     [BepInPlugin(modGUID, modName, modVersion)]
+    [BepInDependency("quackandcheese.togglemute", BepInDependency.DependencyFlags.SoftDependency)]
     internal class CursedScraps : BaseUnityPlugin
     {
         private const string modGUID = "Lega.CursedScraps";
@@ -36,6 +37,7 @@ namespace CursedScraps
             harmony.PatchAll(typeof(ItemManagerPatch));
             harmony.PatchAll(typeof(PlayerManagerPatch));
             harmony.PatchAll(typeof(EnemyAIPatch));
+            PlayerManagerPatch.UDToggleMute(harmony);
         }
     }
 }

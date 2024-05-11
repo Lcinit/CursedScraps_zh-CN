@@ -29,6 +29,7 @@ namespace CursedScraps.Patches
             }
             else
             {
+
                 __instance.EnableEnemyMesh(true);
             }
         }
